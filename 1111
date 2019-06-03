@@ -1,0 +1,36 @@
+const express = require("express");
+// 导入bodyParser模块
+const bodyParser = require("body-parser");
+const app = express();
+
+// 注册中间件
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+
+// 监听客户端的get请求
+app.get("/user", (req, res) => {
+  // 服务器可以直接通过 req.query 属性,获取URL中查询字符串的参数
+  console.log(req.query);
+  res.send("ok");
+});
+
+// URL规则中的:表示参数项
+app.get("/user/:id/:name", (req, res) => {
+  //req.params 可以获取URL地址中传递过来的参数
+  console.log(req.params);
+  res.send("ok");
+});
+
+// 监听客户的POST请求
+app.post("/user", (req, res) => {
+  // 想要通过req.body来获取客户端提交的表单数据，必须先注册body-parser中间件
+  console.log(req.body);
+  res.send("ok");
+});
+
+app.listen(3001, () => {
+  console.log("http://127.0.0.1:3001");
+});
